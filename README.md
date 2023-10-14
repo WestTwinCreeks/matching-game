@@ -1,5 +1,5 @@
 # matching-game
-- This game is contained entirely inside the html file matching-game.html
+- This game is contained entirely inside the html file `matching-game.html`
 
 ### Running locally
 - Running the game requires running the html file on a local server

@@ -1,64 +1,85 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Matching Game</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
     <!-- <script src='main.js'></script> -->
+  </head>
 
-
-
-
-</head>
-
-<style>
+  <style>
     img {
-        position: absolute;
+      position: absolute;
     }
 
     div {
-        position: absolute;
-        width: 500px;
-        height: 500px;
+      position: absolute;
+      width: 500px;
+      height: 500px;
     }
 
     h1 {
-        color: brown;
+      color: brown;
     }
 
     #rightSide {
-        left: 500px;
-        border-left: 5px solid;
+      left: 500px;
+      border-left: 5px solid;
     }
-</style>
+  </style>
 
-<body onload="generateFaces()">
+  <body onload="generateFaces()">
     <h1>Matching Game!</h1>
     <p>Click on the extra smiling face on the left.</p>
     <div id="leftSide"></div>
     <div id="rightSide"></div>
     <script>
+      let numberOfFaces = 5;
+      const theLeftSide = document.getElementById("leftSide");
+      const theRightSide = document.getElementById("rightSide");
 
-        let numberOfFaces = 5;
-        const theLeftSide = document.getElementById('leftSide');
-        const theRightSide = document.getElementById('rightSide');
-        console.log('Left Side');
-        const generateFaces = () => {
-            for (let i = 0; i < numberOfFaces; i++) {
-                console.log('generateFaces');
-                const face = document.createElement('img');
-                face.src = './images/smile.png'
-                const randomTop = Math.floor(Math.random() * 400);
-                const randomLeft = Math.floor(Math.random() * 400);
-                face.style.top = randomTop + 'px';
-                face.style.left = randomLeft + 'px';
-                theLeftSide.appendChild(face);
-                console.log(face);
-            }
+      const generateFaces = () => {
+        const theLeftSide = document.getElementById("leftSide");
+        const theRightSide = document.getElementById("rightSide");
+
+        for (let i = 0; i < numberOfFaces; i++) {
+          console.log("generateFaces");
+          const face = document.createElement("img");
+          face.src = "./images/smile.png";
+          const randomTop = Math.floor(Math.random() * 400);
+          const randomLeft = Math.floor(Math.random() * 400);
+          face.style.top = randomTop + "px";
+          face.style.left = randomLeft + "px";
+          if( i+1 < numberOfFaces ){
+            face.addEventListener("click", gameOver);
+          } else {
+            face.addEventListener("click", nextLevel);
+          }
+
+          theLeftSide.appendChild(face);
         }
+
+        const tempClone = theLeftSide.cloneNode(true);
+        tempClone.removeChild(tempClone.lastChild);
+
+        theRightSide.appendChild(tempClone);
+        // theLeftSide.lastChild.style.border = "5px solid";
+
+      };
+
+      const gameOver = () => {
+        theLeftSide.lastChild.style.border = "5px solid"; // Trying to get this border to appear on game over
+
+        alert("GameOver!");
+      }
+
+      const nextLevel = () => {
+        event.stopPropagation();
+        numberOfFaces += 5;
+        generateFaces();
+      }
     </script>
-</body>
+  </body>
 </html>
