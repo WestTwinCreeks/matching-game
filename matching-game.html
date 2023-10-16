@@ -11,6 +11,8 @@
 
   <style>
     img {
+      /* width: 10%; */
+      height: auto;
       position: absolute;
     }
 
@@ -33,10 +35,18 @@
       left: 500px;
       border-left: 5px solid;
     }
+
+    #level {
+      font: 24px bolder;
+      color: crimson;
+      left: 480px;
+    }
+
   </style>
 
   <body onload="generateFaces()">
 
+    <div id="level"></div>
     <h1>Matching Game!</h1>
     <button id="restart-button">Restart</button>
     <p>Click on the extra smiling face on the left.</p>
@@ -45,10 +55,13 @@
 
     <script>
       let numberOfFaces = 5;
+      let level = 1;
+      let percent = 20;
+      let stringImagePercent = percent+"%";
 
       const generateFaces = () => {
         clearBoard();
-
+        document.getElementById("level").textContent = "Level: " + level
         document.getElementById("restart-button").addEventListener("click", restart);
         const theLeftSide = document.getElementById("leftSide");
         const theRightSide = document.getElementById("rightSide");
@@ -57,6 +70,8 @@
           console.log("generateFaces");
           const face = document.createElement("img");
           face.src = "./images/smile.png";
+          let stringImagePercent = percent+"%";
+          face.style.width = stringImagePercent;
           const randomTop = Math.floor(Math.random() * 400);
           const randomLeft = Math.floor(Math.random() * 400);
           face.style.top = randomTop + "px";
@@ -68,7 +83,6 @@
           theLeftSide.appendChild(face);
         }
         theLeftSide.lastChild.addEventListener("click", nextLevel);
-
         const tempClone = theLeftSide.cloneNode(true);
         tempClone.removeChild(tempClone.lastChild);
 
@@ -100,8 +114,11 @@
 
       const nextLevel = () => {
         console.log("NEXT LEVEL");
-        event.stopPropagation();
+        // event.stopPropagation();
         numberOfFaces += 5;
+        level++;
+        percent--;
+
         generateFaces();
       }
     </script>
