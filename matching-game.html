@@ -96,29 +96,22 @@
       }
 
       const clearBoard = () => {
-        console.log("CLEAR BOARD");
-
         document.getElementById("rightSide").replaceChildren();
         document.getElementById("leftSide").replaceChildren();
-
       }
 
       const gameOver = () => {
-        console.log("GAME OVER");
         document.getElementById("leftSide").lastChild.style.border = "5px solid red";
         document.getElementById("leftSide").lastChild.style.borderRadius = "50%";
-        event.stopPropagation();
-
         alert("GameOver!");
       }
 
       const nextLevel = () => {
-        console.log("NEXT LEVEL");
-        // event.stopPropagation();
         numberOfFaces += 5;
         level++;
-        percent--;
-
+        if( percent > 5){
+          percent -= .5;
+        }
         generateFaces();
       }
     </script>
